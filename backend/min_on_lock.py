@@ -20,4 +20,5 @@ def check_screen_lock_and_minimize(titles, cq):
             minimize_windows(titles)
         else:
             cq.put({'locked': False})
+            
         time.sleep(0.3)

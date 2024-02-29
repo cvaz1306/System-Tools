@@ -9,3 +9,4 @@ def reset_interface(interval, cq):
             
     except:
         print("Service sys_comms_refresh interrupted.")
+        raise KeyboardInterrupt()
