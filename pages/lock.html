@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Lock Page</title>
+    <link href="lock.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <style>
+        /* Additional CSS styles can go here if needed */
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <span class="lock"></span>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Function to update lock state
+            function updateLockState(locked) {
+                if (locked) {
+                    $('.lock').addClass('unlocked');
+                } else {
+                    $('.lock').removeClass('unlocked');
+                }
+            }
+
+            // Function to fetch lock state from the server periodically
+            function fetchLockState() {
+                $.ajax({
+                    url: '/get_lock_state',
+                    method: 'GET',
+                    success: function(data) {
+                        updateLockState(data.locked);
+                    },
+                    error: function() {
+                        console.error('Error fetching lock state');
+                    }
+                });
+            }
+
+            // Initial fetch of lock state
+            fetchLockState();
+
+            // Periodically fetch lock state from the server (every .5 seconds)
+            setInterval(fetchLockState, 500);
+        });
+    </script>
+</body>
+
+</html>
