@@ -1,6 +1,7 @@
 /* :::::::::::::: Presentation css */
 
-* {
+*.container,
+*.parentcontainer {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -8,18 +9,29 @@
     --unlocked-color: #ff5153;
 }
 
+.parentcontainer {
+    width: fit-content;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    background-color: rgb(200, 200, 200);
+}
+
+.parentcontainer:has(> div span.unlocked) {
+    border: 50px solid var(--locked-color);
+}
+
+.parentcontainer:not(:has(> div span.unlocked)) {
+    border: 50px solid var(--unlocked-color);
+}
+
 .container {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 400px;
+    min-height: 200px;
+    min-width: 500px;
 }
-
-
-/* :::::::::::::: Required CSS */
-
-
-/* Locked */
 
 .lock {
     width: 24px;

@@ -8,7 +8,7 @@ flask.cli.show_server_banner = lambda *args: None
 from config.mol import AUTH_USERNAME, AUTH_PSSSWD
 import logging
 logging.getLogger("werkzeug").disabled = True
-
+import ctypes
 
 app = Flask(__name__)
 app.config['BASIC_AUTH_USERNAME'] = AUTH_USERNAME
@@ -17,9 +17,9 @@ app.config['BASIC_AUTH_FORCE'] = True
 
 basic_auth = BasicAuth(app)
 lock_state = False
-cq=Queue()  # multiprocessing Queue for communication
+cq=Queue()
 
-# Function to listen for changes in the multiprocessing Queue
+
 def queue_listener():
     global lock_state
     while True:
@@ -31,7 +31,22 @@ def queue_listener():
             #print(item)
             lock_state = not item['locked']
 
-# Start the queue listener thread
+
+@basic_auth.required
+@app.route('/lock')
+def lock():
+    ctypes.windll.user32.LockWorkStation()
+    return jsonify({'locked': lock_state})
+
+
+@basic_auth.required
+@app.route('/get_lock_state')
+def get_lock_state():
+    global lock_state
+    
+    return jsonify({'locked': lock_state})
+
+
 
 @basic_auth.required
 @app.route('/<path:file_path>')
@@ -47,15 +62,11 @@ def hello(file_path):
     
     return Response(data, content_type=content_type)
 
-# Route to provide JSON data for lock state
-@basic_auth.required
-@app.route('/get_lock_state')
-def get_lock_state():
-    global lock_state
-    
-    return jsonify({'locked': lock_state})
 
-#if __name__ == '__main__':
+
+
+
+
 def run(queue):
     global cq
     cq=queue

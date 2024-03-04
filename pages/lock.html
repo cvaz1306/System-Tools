@@ -6,25 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Live Lock Page</title>
     <link href="lock.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="/jquery.js"></script>
     <style>
         /* Additional CSS styles can go here if needed */
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <span class="lock"></span>
+    <div class="parentcontainer">
+        <div class="container">
+            <span class="lock"></span>
+        </div>
     </div>
-
+    <div class="parentcontainer">
+        <div class="container">
+            <span>STUFF</span>
+        </div>
+    </div>
     <script>
         $(document).ready(function() {
             // Function to update lock state
             function updateLockState(locked) {
                 if (locked) {
                     $('.lock').addClass('unlocked');
+                    $('.lock')[0].text = 'Unlocked';
                 } else {
                     $('.lock').removeClass('unlocked');
+                    $('.lock')[0].text = 'Locked';
                 }
             }
 
@@ -42,10 +50,24 @@
                 });
             }
 
+            function lock() {
+                $.ajax({
+                    url: '/lock',
+                    method: 'GET',
+                    success: function(data) {
+                        updateLockState(data.locked);
+                    },
+                    error: function() {
+                        console.error('Error fetching lock state');
+                    }
+                });
+            }
             // Initial fetch of lock state
             fetchLockState();
-
-            // Periodically fetch lock state from the server (every .5 seconds)
+            $('.lock').on('click', function(event) {
+                    lock();
+                })
+                // Periodically fetch lock state from the server (every .5 seconds)
             setInterval(fetchLockState, 500);
         });
     </script>

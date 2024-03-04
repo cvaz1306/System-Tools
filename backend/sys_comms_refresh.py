@@ -8,5 +8,5 @@ def reset_interface(interval, cq):
             sleep(interval)
             
     except:
-        print("Service sys_comms_refresh interrupted.")
-        raise KeyboardInterrupt()
+        print("Service sys_comms_refresh() interrupted.")
+        cq.put("KEYBOARD")

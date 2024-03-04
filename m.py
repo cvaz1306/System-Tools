@@ -3,7 +3,7 @@ import multiprocessing
 import server as webui
 import time
 from config.mol import WINDOWS2MIN
-# List to store module functions and their arguments
+
 modules = []
 processes = []
 def add_module(module_function, *args, **kwargs):
@@ -20,7 +20,6 @@ def join_modules():
     for process in processes:
         process.join()
 
-# Add modules to the list with their respective arguments
 
 cmsq=multiprocessing.Queue()
 add_module(sys_comms_refresh.reset_interface, 0.1, cmsq)
@@ -36,7 +35,9 @@ if __name__ == '__main__':
         run_modules()
         while True:
             if not cmsq.empty():
-                pass
+                msg=cmsq.get()
+                if msg=='KEYBOARD':
+                    raise Exception()
             webuiq.put({'locked':screenlock.is_screen_locked()})
             time.sleep(.2)
             
