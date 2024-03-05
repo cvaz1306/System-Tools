@@ -1,11 +1,24 @@
-from backend.modules import *
-
+from backend.modulebase import *
+from config.mol import WINDOWS2MIN
 
 if __name__ == '__main__':
-    module_manager = ModuleManager()
-    cmsq=multiprocessing.Queue()
-    module_manager.add_module(sys_comms_refresh.reset_interface, 0.1, cmsq)
-    module_manager.add_module(min_on_lock.check_screen_lock_and_minimize, WINDOWS2MIN, cmsq)
-    
+    minimize_windows_module = MinimizeWindows(WINDOWS2MIN, multiprocessing.Queue())
+    reset_interface_module = ResetInterface(0.1, multiprocessing.Queue())
+    main_module = MainModule(multiprocessing.Queue(), multiprocessing.Queue())
+
     print("Service started")
-    module_manager.run_modules()
+    try:
+        minimize_windows_module.start()
+        reset_interface_module.start()
+        main_module.start()
+    except KeyboardInterrupt:
+        print("Service ended with keyboard.")
+        minimize_windows_module.stop()
+        reset_interface_module.stop()
+        main_module.stop()
+        
+    except Exception as e:
+        minimize_windows_module.stop()
+        reset_interface_module.stop()
+        main_module.stop()
+        print(f"Error: {e}")
