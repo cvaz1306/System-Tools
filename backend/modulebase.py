@@ -1,6 +1,6 @@
 import multiprocessing
 import time
-import server as webui
+from . import server as webui
 from backend import screenlock
 import pygetwindow as gw
 import ctypes
@@ -53,5 +53,3 @@ class ResetInterface(Module):
 
     def reset_interface(self):
         ctypes.windll.user32.SendMessageW(0xFFFF, 0x0214, 0, 0)
-
-

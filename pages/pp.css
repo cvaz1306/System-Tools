@@ -5,6 +5,12 @@ body {
     height: 100vh;
     margin: 0;
   }
+  .lefts{
+    --xyx:translateX(-10px)
+  }
+  .rights{
+    --xyx:translateX(10px)
+  }
   .inl{
     display: inline;
     height: fit-content;
@@ -15,7 +21,11 @@ body {
     border-radius: 10px;
     transition: all .1s ease-in-out;
   }
-  div.inl.btn:hover{
+  div.inl.btn.active{
+    background-color: rgb(209, 209, 209);
+    transform: var(--xyx);
+  }
+  div.inl.btn:hover:not(.active){
     background-color: gainsboro;
   }
   div.inl:not(.button){

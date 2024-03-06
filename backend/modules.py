@@ -1,6 +1,6 @@
 import multiprocessing
 import time
-import server as webui
+import backend.server as webui
 from backend import sys_comms_refresh, min_on_lock, screenlock
 from config.mol import WINDOWS2MIN
 

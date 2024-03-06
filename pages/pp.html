@@ -3,11 +3,12 @@
 <head>
     <link href="/pp.css" rel="stylesheet">
     <link href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" rel="stylesheet">
+    <script src="/jquery.js"></script>
 </head>
 
 <body>
     <div class="floating">
-        <div class="inl btn">
+        <div class="inl btn lefts" onmousedown="this.classList.add('active')" onmouseup="this.classList.remove('active')">
             <i class="fas fa-backward"></i>
         </div>
         <div class="button inl" onclick="this.classList.toggle('active')">
@@ -18,10 +19,65 @@
             </div>
             <div class="pointer"></div>
         </div>
-        <div class="inl btn">
+        <div class="inl btn rights" onmousedown="this.classList.add('active')" onmouseup="this.classList.remove('active')">
             <i class="fas fa-forward"></i>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            // Function to fetch lock state from the server periodically
+            function togglePlayback() {
+                $.ajax({
+                    url: '/media/playpause',
+                    method: 'GET',
+                    success: function(data) {
+                        
+                    },
+                    error: function() {
+                        console.error('Error pausing/resuming;');
+                    }
+                });
+            }
+
+            function skip() {
+                $.ajax({
+                    url: '/media/skip',
+                    method: 'GET',
+                    success: function(data) {
+                        
+                    },
+                    error: function() {
+                        console.error('Error fetching lock state');
+                    }
+                });
+            }
+            
+            
+            function rewind() {
+                $.ajax({
+                    url: '/media/rewind',
+                    method: 'GET',
+                    success: function(data) {
+                        
+                    },
+                    error: function() {
+                        console.error('Error fetching lock state');
+                    }
+                });
+            }
+            
+
+            $('.lefts').on('click', function(event) {
+                    skip();
+                })
+            $('.rights').on('click', function(event){
+                rewind();
+            })
+            $('.button.inl').on('click',function(event){
+                togglePlayback();
+            })
+        });
+    </script>
 </body>
 
 </html>

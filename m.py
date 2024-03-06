@@ -1,6 +1,6 @@
 from backend.modulebase import *
 from config.mol import WINDOWS2MIN
-
+from backend.mainmodule import MainModule
 if __name__ == '__main__':
     minimize_windows_module = MinimizeWindows(WINDOWS2MIN, multiprocessing.Queue())
     reset_interface_module = ResetInterface(0.1, multiprocessing.Queue())

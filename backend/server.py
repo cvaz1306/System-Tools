@@ -9,6 +9,9 @@ from config.mol import AUTH_USERNAME, AUTH_PSSSWD
 import logging
 logging.getLogger("werkzeug").disabled = True
 import ctypes
+import pyautogui
+
+
 
 app = Flask(__name__)
 app.config['BASIC_AUTH_USERNAME'] = AUTH_USERNAME
@@ -63,7 +66,26 @@ def hello(file_path):
     return Response(data, content_type=content_type)
 
 
+@app.route('/media/playpause')
+def pp():
+    pyautogui.press("playpause")
+    return jsonify({
+        'success':True
+    })
 
+@app.route('/media/rewind')
+def rewind():
+    pyautogui.press("prevtrack")
+    return jsonify({
+        'success':True
+    })
+
+@app.route('/media/skip')
+def skip():
+    pyautogui.press("nexttrack")
+    return jsonify({
+        'success':True
+    })
 
 
 
