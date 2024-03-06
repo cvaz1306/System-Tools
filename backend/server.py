@@ -66,13 +66,20 @@ def hello(file_path):
     return Response(data, content_type=content_type)
 
 
-@app.route('/media/playpause')
-def pp():
+@app.route('/media/playpause/false')
+def play():
+    pyautogui.press(['pause','playpause'], interval=.25)
     pyautogui.press("playpause")
     return jsonify({
         'success':True
     })
 
+@app.route('/media/playpause/true')
+def pause():
+    pyautogui.press("pause")
+    return jsonify({
+        'success':True
+    })
 @app.route('/media/rewind')
 def rewind():
     pyautogui.press("prevtrack")

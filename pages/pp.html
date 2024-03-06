@@ -27,8 +27,9 @@
         $(document).ready(function() {
             // Function to fetch lock state from the server periodically
             function togglePlayback() {
+                var playing=$('.button.inl').classList.contains('active');
                 $.ajax({
-                    url: '/media/playpause',
+                    url: '/media/playpause/'+playing.toString(),
                     method: 'GET',
                     success: function(data) {
                         
