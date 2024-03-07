@@ -2,8 +2,6 @@ body {
   align-items: center;
   display: flex;
   justify-content: center;
-  height: 100vh;
-  margin: 0;
 
 }
 
@@ -34,7 +32,7 @@ body div.floating.bottom {
 
 div.inl.btn {
   background-color: transparent;
-  padding: 25px;
+
   border-radius: 10px;
   transition: all .1s ease-in-out;
 }
@@ -49,17 +47,22 @@ div.inl.btn.active.centers {
   transform: var(--scale);
 }
 
-div.inl.btn:hover:not(.active) {
-  background-color: gainsboro;
+@media not screen and (max-aspect-ratio:17/9) {
+  div.inl.btn:hover:not(.active) {
+    background-color: gainsboro;
+  }
 }
 
+/* For computers */
 .floating {
   display: inline-flex;
   justify-content: center;
   width: fit-content;
   height: fit-content;
-  padding-left: 100px;
-  padding-right: 100px;
+  padding-left: calc(100px + 10vw);
+  /* Adjust as needed */
+  padding-right: calc(100px + 10vw);
+  /* Adjust as needed */
   border-radius: 30px;
   -webkit-box-shadow: 9px 13px 32px -12px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 9px 13px 32px -12px rgba(0, 0, 0, 0.75);
@@ -67,12 +70,50 @@ div.inl.btn:hover:not(.active) {
   transition: .2s ease-in-out;
 }
 
+/* For computers */
+.fa {
+  font-size: calc(20px + 0.5vw);
+  /* Adjust as needed */
+}
+
+
+
+.btn {
+  background-color: transparent;
+  padding: calc(25px + 0.5vw);
+  /* Adjust as needed */
+  border-radius: 50%;
+  transition: all .1s ease-in-out;
+}
+
+/* For phones */
+@media screen and (max-aspect-ratio: 17/9) {
+  .floating {
+    bottom: 50px;
+    padding-left: 20px;
+    /* Adjust as needed */
+    padding-right: 20px;
+    /* Adjust as needed */
+  }
+
+  .btn {
+    padding: 100px;
+    /* Adjust as needed */
+  }
+
+  .btn i {
+    font-size: xx-large;
+  }
+}
+
+
 .floating:hover {
   -webkit-box-shadow: 9px 13px 61px -12px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 9px 13px 61px -12px rgba(0, 0, 0, 0.75);
   box-shadow: 9px 13px 61px -12px rgba(0, 0, 0, 0.75);
 
 }
+
 .background {
   background: #1f8df4;
   border-radius: 50%;
