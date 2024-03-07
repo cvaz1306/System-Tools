@@ -2,39 +2,41 @@
 
 <head>
     <link href="/pp.css" rel="stylesheet">
+    <link href="/fa/all.css" rel="stylesheet">
+
     <link href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v6.5.1/css/all.css">
+
+
+
+
     <script src="/jquery.js"></script>
 </head>
 
 <body>
-    <div class="floating">
-        <div class="inl btn lefts" onmousedown="this.classList.add('active')" onmouseup="this.classList.remove('active')">
-            <i class="fas fa-backward"></i>
+    <div class="floating bottom">
+            onmouseup="this.classList.remove('active')">
+            <i class="fa-solid fa-play-pause"></i>
         </div>
-        <div class="button inl" onclick="this.classList.toggle('active')">
-            <div class="background" x="0" y="0" width="200" height="200"></div>
-            <div class="icon" width="200" height="200">
-                <div class="part left" x="0" y="0" width="200" height="200" fill="#fff"></div>
-                <div class="part right" x="0" y="0" width="200" height="200" fill="#fff"></div>
-            </div>
-            <div class="pointer"></div>
-        </div>
-        <div class="inl btn rights" onmousedown="this.classList.add('active')" onmouseup="this.classList.remove('active')">
+
+        <div class="inl btn rights" onmousedown="this.classList.add('active')"
+            onmouseup="this.classList.remove('active')">
             <i class="fas fa-forward"></i>
         </div>
     </div>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Function to fetch lock state from the server periodically
             function togglePlayback() {
-                var playing=$('.button.inl').classList.contains('active');
+
+
                 $.ajax({
-                    url: '/media/playpause/'+playing.toString(),
+                    url: '/media/playpause',
                     method: 'GET',
-                    success: function(data) {
-                        
+                    success: function (data) {
+                        //console.log('Success');
                     },
-                    error: function() {
+                    error: function () {
                         console.error('Error pausing/resuming;');
                     }
                 });
@@ -44,37 +46,38 @@
                 $.ajax({
                     url: '/media/skip',
                     method: 'GET',
-                    success: function(data) {
-                        
+                    success: function (data) {
+
                     },
-                    error: function() {
+                    error: function () {
                         console.error('Error fetching lock state');
                     }
                 });
             }
-            
-            
+
+
             function rewind() {
                 $.ajax({
                     url: '/media/rewind',
                     method: 'GET',
-                    success: function(data) {
-                        
+                    success: function (data) {
+
                     },
-                    error: function() {
+                    error: function () {
                         console.error('Error fetching lock state');
                     }
                 });
             }
-            
 
-            $('.lefts').on('click', function(event) {
-                    skip();
-                })
-            $('.rights').on('click', function(event){
+
+            $('.lefts').on('click', function (event) {
                 rewind();
             })
-            $('.button.inl').on('click',function(event){
+            $('.rights').on('click', function (event) {
+                skip();
+            })
+            $('.btn.inl.centers').on('click', function (event) {
+                //console.log("Pausing/playing")
                 togglePlayback();
             })
         });

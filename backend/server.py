@@ -66,17 +66,10 @@ def hello(file_path):
     return Response(data, content_type=content_type)
 
 
-@app.route('/media/playpause/false')
+@app.route('/media/playpause')
 def play():
-    pyautogui.press(['pause','playpause'], interval=.25)
-    pyautogui.press("playpause")
-    return jsonify({
-        'success':True
-    })
-
-@app.route('/media/playpause/true')
-def pause():
-    pyautogui.press("pause")
+    pyautogui.press('playpause')
+    #pyautogui.press("playpause")
     return jsonify({
         'success':True
     })
